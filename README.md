@@ -1,1 +1,1 @@
-# MEICash-front-end
+# MEICash Front-end
