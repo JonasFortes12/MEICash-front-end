@@ -21,3 +21,4 @@ o seguinte comando
     ```bash
     pnpm run dev
     ```
+    ![image](https://github.com/JonasFortes12/MEICash-front-end/assets/43821439/211a4b49-ae92-4ccf-8e0f-00a8314d3992)
