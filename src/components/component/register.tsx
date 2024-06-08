@@ -12,6 +12,9 @@ import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FormEvent, useState } from "react";
 
+import User from "@/interfaces/User";
+import userService from "@/service/UserService";
+
 function Register() {
   const [companyName, setCompanyName] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -22,10 +25,27 @@ function Register() {
   const [check, setCheck] = useState(false);
   const handleCheck = () => setCheck(!check);
 
-  function handleSubmit(e: FormEvent) {
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    console.log(name, email, password, check);
+    const user: User = {
+      username,
+      firstName,
+      lastName,
+      companyName,
+      email,
+      password
+    }
+
+    try {
+      const resp = await userService.createUser(user)
+
+      console.log(resp)
+    } catch (error) {
+      console.log(error)
+    }
+
+    console.log(email, password, check);
   }
 
   return (

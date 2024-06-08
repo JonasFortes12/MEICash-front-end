@@ -15,13 +15,11 @@ import { FormEvent, useState } from "react";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [check, setCheck] = useState(false);
-  const handleCheck = () => setCheck(!check)
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    console.log(email, password, check)
+    console.log(email, password)
   }
 
   return (
@@ -64,7 +62,7 @@ function Login() {
           <CardFooter className="flex flex-col ">
             <div className="w-full flex flex-row justify-between">
               <div className="flex items-center">
-                <Checkbox id="check" name="check" onClick={handleCheck}/>
+                <Checkbox id="check" name="check" />
                 <label className="pl-1" htmlFor="check">
                   Lembrar
                 </label>
