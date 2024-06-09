@@ -85,22 +85,54 @@ function Transactions() {
   }
 
   return (
-    <div className=" max-w-4xl mx-auto space-y-4 text-center">
-      <h1 className="text-3xl font-bold">Histórico de Transações - xxxxxxx</h1>
+    <div className="w-screen flex">
 
-      <div className="flex items-center justify-between ">
-        <form className="flex items-center gap-2">
-          <Input name="id" placeholder="Título da transação" />
-          <Button type="submit" variant={"secondary"}>
-            <Search className="w-4 h-4 mr-2 " />
-            Filtrar Resultados
-          </Button>
-        </form>
+      <div className="w-1/5 flex flex-col w-1/5 h-screen bg-stone-800 ">
+        <div className="text-center p-6 pb-1">
+          <a className="text-gray-200 text-3xl font-bold cursor-pointer">Mei<span className="text-yellow-400">Cash</span></a>
+        </div>
+        <div className="text-center p-7 pt-2">
+          <div className="border-b-2 border-gray-200"></div>
+        </div>
+        <div className="h-full flex flex-col">
+          <ul className="list-disc text-gray-200 pl-14 justify-start text-base marker:text-yellow-400 tracking-widest">
+            <li className="cursor-pointer hover:text-yellow-400 duration-500"><a href="/transaction">Histórico de transações</a></li>
+            <li className="cursor-default">xxxxxxxxxx</li>
+            <li className="cursor-default">xxxxxxxxxx</li>
+            <li className="cursor-default">xxxxxxxxxx</li>
+            <li className="cursor-default">xxxxxxxxxx</li>
+          </ul>
+        </div>
+      </div>
 
-        <div className="space-x-1">
+      <div className="w-4/5 h-screen space-y-4 text-center justify-self p-10">
+
+        <div className="border-b-2 border-gray-200 justify-between flex">
+            <div className="text-start font-bold text-2xl text-stone-700">
+              <h1>Bem-vindo, <span className="text-yellow-400">xxxxxxxxxx</span>!</h1>
+            </div>
+            <div>
+              <p>Options</p>
+            </div>
+        </div>
+
+        <h1 className="text-2xl font-bold pt-2 text-stone-700">
+          Histórico de Transações - xxxxxxx
+        </h1>
+
+        <div className="flex items-center justify-between ">
+          <form className="flex items-center gap-2">
+            <Input name="id" placeholder="Id do pedido" />
+            <Input name="name" placeholder="Nome do produto" />
+            <Button type="submit" variant={"secondary"}>
+              <Search className="w-4 h-4 mr-2 " />
+              Filtrar Resultados
+            </Button>
+          </form>
+          <div className="space-x-1">
           <Dialog>
             <DialogTrigger>
-              <Button>
+              <Button className="bg-stone-800">
                 <PlusCircle className="w-4 h-4 mr-2 " />
                 Nova categoria
               </Button>
@@ -114,7 +146,7 @@ function Transactions() {
                 </DialogDescription>
               </DialogHeader>
 
-              <form className="space-y-6" onSubmit={handleSubmit}>
+              <form className="space-y-6" onSubmit={handleSubmitCategory}>
                 <div className="grid grid-cols-2 items-center text-left gap-3">
                   <Label htmlFor="category">Nome da categoria</Label>
                   <Input
@@ -140,14 +172,14 @@ function Transactions() {
                       Cancelar
                     </Button>
                   </DialogClose>
-                  <Button onClick={handleSubmitCategory}>Registrar</Button>
+                  <Button onClick={handleSubmit}>Registrar</Button>
                 </DialogFooter>
               </form>
             </DialogContent>
           </Dialog>
           <Dialog>
             <DialogTrigger asChild>
-              <Button>
+              <Button className="bg-stone-800">
                 <PlusCircle className="w-4 h-4 mr-2 " />
                 Nova transação
               </Button>
@@ -227,33 +259,34 @@ function Transactions() {
             </DialogContent>
           </Dialog>
         </div>
-      </div>
+        </div>
 
-      <div className="grid grid-cols-2 gap-4 border rouded-lg p-4">
-        {trans.map((data, index) => (
-          <Card className="justify-items-start">
-            <CardContent>
-              <CardHeader className="grid justify-items-start">
-                <CardTitle className="font-bold text-2xl">
-                  {data.title}
-                </CardTitle>
-                <CardDescription>
-                  Valor da transação: R${data.value}
-                </CardDescription>
+        <div className="grid grid-cols-2 gap-4 border rouded-lg p-4">
+          {trans.map((data, index) => (
+            <Card className="justify-items-start">
+              <CardContent>
+                <CardHeader className="grid justify-items-start">
+                  <CardTitle className="font-bold text-2xl">
+                    {data.title}
+                  </CardTitle>
+                  <CardDescription>
+                    Valor da transação: R${data.value}
+                  </CardDescription>
 
-                <div className="pt-3 text-start">
-                  <p>{data.desc}</p>{" "}
-                </div>
-              </CardHeader>
+                  <div className="pt-3 text-start">
+                    <p>{data.desc}</p>{" "}
+                  </div>
+                </CardHeader>
 
-              <CardFooter className="grid grid-cols-2 gap-1 space-x-1 justify-end font-bold pb-0">
-                <div className="max-w-full border rounded-lg p-1 bg-lime-400 text-white border-none cursor-pointer">
-                  {data.category}
-                </div>
-              </CardFooter>
-            </CardContent>
-          </Card>
-        ))}
+                <CardFooter className="grid grid-cols-2 gap-1 space-x-1 justify-end font-bold pb-0">
+                  <div className="max-w-full border rounded-lg p-1 bg-lime-400 text-white border-none cursor-pointer">
+                    {data.category}
+                  </div>
+                </CardFooter>
+              </CardContent>
+            </Card>
+          ))}
+        </div>
       </div>
     </div>
   );
