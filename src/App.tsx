@@ -10,8 +10,8 @@ export function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/transaction' element={ <Transactions /> }/>
-        <Route path='/' element={ <Login /> }/>
+        <Route path='/' element={ <Transactions /> }/>
+        <Route path='/login' element={ <Login /> }/>
         <Route path='/register' element={ <Register /> }/> 
       </Routes>
     </BrowserRouter>

@@ -10,10 +10,12 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import { useNavigate } from 'react-router-dom';
 
 import User from "@/interfaces/User";
 import userService from "@/service/UserService";
+import authProvider from "@/service/AuthProvider";
 
 function Register() {
   const [companyName, setCompanyName] = useState("");
@@ -24,34 +26,49 @@ function Register() {
   const [password, setPassword] = useState("");
   const [check, setCheck] = useState(false);
   const handleCheck = () => setCheck(!check);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    function checkAuth() {
+      if (authProvider.checkAuth()){
+        return navigate('/')
+      }
+    }
+    checkAuth();
+  })
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
     const user: User = {
+      email,
       username,
+      password,
       firstName,
       lastName,
       companyName,
-      email,
-      password
-    }
+    };
 
     try {
-      const resp = await userService.createUser(user)
+      const resp = await userService.createUser(user);
+      console.log(resp.status)
 
-      console.log(resp)
+      
+      if (resp.status == 200){
+        console.log('oi')
+        return navigate('/')
+      }
+
+      navigate('/register')
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
-
-    console.log(email, password, check);
   }
 
   return (
     <div className="h-dvh w-dvh content-center">
       <Card className="m-auto h-fit w-1/3">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} autoComplete="Off">
           <CardHeader>
             <CardTitle className="text-center font-bold text-2xl">
               Cadastro
@@ -63,8 +80,9 @@ function Register() {
           <CardContent>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Nome da empresa</Label>
+                <Label htmlFor="companyName">Nome da empresa</Label>
                 <Input
+                  autoComplete="off"
                   type="text"
                   id="companyName"
                   placeholder="Empresa do Evanildo"
@@ -73,8 +91,9 @@ function Register() {
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Primeiro nome</Label>
+                <Label htmlFor="firstName">Primeiro nome</Label>
                 <Input
+                autoComplete="off"
                   type="text"
                   id="firstName"
                   placeholder="Evanildo"
@@ -83,8 +102,9 @@ function Register() {
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Último nome</Label>
+                <Label htmlFor="lastName">Último nome</Label>
                 <Input
+                autoComplete="off"
                   type="text"
                   id="lastName"
                   placeholder="Batista"
@@ -93,8 +113,9 @@ function Register() {
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="name">Nome de usuário</Label>
+                <Label htmlFor="username">Nome de usuário</Label>
                 <Input
+                autoComplete="off"
                   type="text"
                   id="username"
                   placeholder="Evanildo Batista"
@@ -105,6 +126,7 @@ function Register() {
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="email">Email</Label>
                 <Input
+                autoComplete="off"
                   type="email"
                   id="email"
                   placeholder="exemplo@outlook.com"
@@ -115,6 +137,7 @@ function Register() {
               <div className="flex flex-col space-y-1.5">
                 <Label htmlFor="password">Senha</Label>
                 <Input
+                autoComplete="off"
                   type="password"
                   id="password"
                   placeholder="**********"
