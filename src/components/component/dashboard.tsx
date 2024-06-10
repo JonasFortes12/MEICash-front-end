@@ -127,7 +127,7 @@ function Transactions() {
         <div className="h-full flex flex-col">
           <ul className="list-disc text-gray-200 pl-14 justify-start text-base marker:text-yellow-400 tracking-widest">
             <li className="cursor-pointer hover:text-yellow-400 duration-500">
-              <a href="/transaction">Histórico de transações</a>
+              <a href="/">Histórico de transações</a>
             </li>
             <li className="cursor-default">xxxxxxxxxx</li>
             <li className="cursor-default">xxxxxxxxxx</li>
@@ -150,7 +150,7 @@ function Transactions() {
               <FaBell className="cursor-pointer hover:text-yellow-400 duration-500" />
               <FaUser className="cursor-pointer hover:text-yellow-400 duration-500 " />
               <FaGear className="cursor-pointer hover:text-yellow-400 duration-500 " />
-              <DropdownMenuTrigger className="text-xl">
+              <DropdownMenuTrigger className="pt-0 flex">
                 <FaCaretDown className="cursor-pointer hover:text-yellow-400 duration-500" />
               </DropdownMenuTrigger>
               <DropdownMenuContent className="">
@@ -171,8 +171,7 @@ function Transactions() {
 
         <div className="flex items-center justify-between ">
           <form className="flex items-center gap-2">
-            <Input name="id" placeholder="Id do pedido" />
-            <Input name="name" placeholder="Nome do produto" />
+            <Input name="id" placeholder="Título da transação" />
             <Button type="submit" variant={"secondary"}>
               <Search className="w-4 h-4 mr-2 " />
               Filtrar Resultados
@@ -181,7 +180,7 @@ function Transactions() {
           <div className="space-x-1">
             <Dialog>
               <DialogTrigger>
-                <Button className="bg-stone-800">
+                <Button className="bg-stone-800 hover:bg-gray-800 duration-500  ">
                   <PlusCircle className="w-4 h-4 mr-2 " />
                   Nova categoria
                 </Button>
