@@ -9,19 +9,23 @@ const apiClient = {
         console.log(resp)
         return handleResponse(resp)
     },
-    post: async (url: string, data: {}) => {
+    post: async (url: string, data: {}, login: boolean) => {
         const resp = await fetch(url, {
             method: 'POST',
-            headers: {},
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
             body: JSON.stringify(data)
         }) 
-        return handleResponse(resp)
+
+        if (login) {return resp.json()}
+
+        return resp
     }
 }
 
 const handleResponse = (resp: Response) => { 
-    console.log(resp.status)
-    console.log(resp.status != 200 )
     if (resp.status === 0) {
         const error = resp.statusText
         console.log(error)

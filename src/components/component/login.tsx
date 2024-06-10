@@ -10,16 +10,44 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
+import userService from "@/service/UserService";
+import { useNavigate } from "react-router-dom";
+import authProvider from "@/service/AuthProvider";
 
 function Login() {
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  function handleSubmit(e: FormEvent) {
+  useEffect(() => {
+    function checkAuth() {
+      if (authProvider.checkAuth()){
+        return navigate('/')
+      }
+    }
+    checkAuth();
+  })
+
+  async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
-    console.log(email, password)
+    const user = {
+      username,
+      password,
+    };
+
+    try {
+      const resp = await userService.login(user);
+
+      if (resp) {
+        authProvider.login(resp.token)
+
+        return navigate('/');
+      }
+
+      navigate('/')
+    } catch (error) {}
   }
 
   return (
@@ -38,13 +66,13 @@ function Login() {
           <CardContent>
             <div className="grid w-full items-center gap-4">
               <div className="flex flex-col space-y-1.5">
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="username">Nome de usuário</Label>
                 <Input
-                  type="email"
-                  id="email"
-                  placeholder="exemplo@outlook.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  type="text"
+                  id="username"
+                  placeholder="Evanildo"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
               <div className="flex flex-col space-y-1.5">
@@ -78,7 +106,9 @@ function Login() {
             </div>
 
             <div className="mt-5">
-              <Button type='submit' className="font-bold text-base">Entrar </Button>
+              <Button type="submit" className="font-bold text-base">
+                Entrar{" "}
+              </Button>
             </div>
           </CardFooter>
         </form>

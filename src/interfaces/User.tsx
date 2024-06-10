@@ -1,10 +1,10 @@
 interface User {
+  email: string,
   username: string,
+  password: string
   firstName: string,
   lastName: string,
   companyName: string,
-  email: string,
-  password: string
 }
 
 export default User
