@@ -17,6 +17,8 @@ import User from "@/interfaces/User";
 import userService from "@/service/UserService";
 import authProvider from "@/service/AuthProvider";
 
+import { BsFillArrowLeftCircleFill } from "react-icons/bs";
+
 function Register() {
   const [companyName, setCompanyName] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -66,22 +68,28 @@ function Register() {
   }
 
   return (
-    <div className="h-dvh w-dvh content-center">
-      <Card className="m-auto h-fit w-1/3">
-        <form onSubmit={handleSubmit} autoComplete="Off">
+    <div className="h-fit w-dvh content-center bg-gray-200">
+      <Card className="my-10 mx-auto h-fit w-1/3 border-none bg-neutral-700 drop-shadow-2xl rounded-sm p-10 shadow-stone-400 shadow-md shadow-[7px_7px_6px_0_rgba(0,0,0,0.1)] ">
+        <div className="text-3xl w-fit">
+          <a href="/login" className="cursor-pointer text-gray-200 hover:text-yellow-400">
+            <BsFillArrowLeftCircleFill />
+          </a>
+        </div>
+        <form onSubmit={handleSubmit} autoComplete="Off" className="pt-0">
           <CardHeader>
-            <CardTitle className="text-center font-bold text-2xl">
+            <CardTitle className="text-center font-bold text-2xl text-yellow-400">
               Cadastro
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-gray-200">
               Cadastre-se para utilizar todos os recursos do nosso sistema!
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="companyName">Nome da empresa</Label>
                 <Input
+                className="bg-gray-200 text-stone-950"
                   autoComplete="off"
                   type="text"
                   id="companyName"
@@ -90,9 +98,10 @@ function Register() {
                   onChange={(e) => setCompanyName(e.target.value)}
                 />
               </div>
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="firstName">Primeiro nome</Label>
                 <Input
+                className="bg-gray-200 text-stone-950"
                 autoComplete="off"
                   type="text"
                   id="firstName"
@@ -101,9 +110,10 @@ function Register() {
                   onChange={(e) => setFirstName(e.target.value)}
                 />
               </div>
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="lastName">Último nome</Label>
                 <Input
+                className="bg-gray-200 text-stone-950"
                 autoComplete="off"
                   type="text"
                   id="lastName"
@@ -112,9 +122,10 @@ function Register() {
                   onChange={(e) => setLastName(e.target.value)}
                 />
               </div>
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="username">Nome de usuário</Label>
                 <Input
+                className="bg-gray-200 text-stone-950"
                 autoComplete="off"
                   type="text"
                   id="username"
@@ -123,9 +134,10 @@ function Register() {
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="email">Email</Label>
                 <Input
+                className="bg-gray-200 text-stone-950"
                 autoComplete="off"
                   type="email"
                   id="email"
@@ -134,9 +146,10 @@ function Register() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="password">Senha</Label>
                 <Input
+                className="bg-gray-200 text-stone-950"
                 autoComplete="off"
                   type="password"
                   id="password"
@@ -146,28 +159,30 @@ function Register() {
                 />
               </div>
             </div>
-          </CardContent>
-          <CardFooter className="flex flex-col ">
-            <div className="w-full flex flex-row justify-between">
+            <div className="w-full flex flex-row justify-between text-gray-200 pt-2">
               <div className="flex items-center">
-                <Checkbox id="check" name="check" onClick={handleCheck} />
+                <Checkbox className="bg-gray-200" id="check" name="check" />
                 <label className="pl-1" htmlFor="check">
                   Lembrar
                 </label>
               </div>
 
-              <div className="flex pl-1  underline underline-offset-2">
-                <a href="/login">
-                  Já registrado?
-                  <span className="font-bold"> Clique aqui</span>
+              <div className="flex pl-1">
+                <a href="/">
+                  <span className="text-sm font-bold cursor-pointer hover:text-yellow-400 duration-500 underline hover:decoration-yellow-400">Não consigo me cadastrar</span>
                 </a>
               </div>
             </div>
+          </CardContent>
+          <CardFooter className="flex flex-col ">
 
-            <div className="mt-5">
-              <Button type="submit" className="font-bold text-base">
-                Cadastrar
-              </Button>
+          <div className="mt-2 mb-2 w-full ">
+              <Button type="submit" className="w-full font-bold text-base bg-stone-800 text-yellow-400 hover:bg-stone-700">
+                Cadastrar{" "}
+              </Button> 
+            </div>
+            <div className="w-full">
+              <a href="/login" className="text-sm font-bold underline decoration-solid justify-start text-gray-200 ">Já possui uma conta? <span className="cursor-pointer hover:text-yellow-400 duration-500 underline hover:decoration-yellow-400">Entre aqui</span></a>
             </div>
           </CardFooter>
         </form>

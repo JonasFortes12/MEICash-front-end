@@ -51,23 +51,25 @@ function Login() {
   }
 
   return (
-    <div className="h-dvh w-dvh content-center">
-      <Card className="m-auto h-fit w-1/4">
+    <div className="h-dvh w-dvh content-center bg-gray-200">
+
+      <Card className="border-none m-auto h-fit w-2/6 bg-neutral-700 drop-shadow-2xl rounded-sm p-12 shadow-stone-400 shadow-md shadow-[7px_7px_6px_0_rgba(0,0,0,0.1)]">
         <form onSubmit={handleSubmit}>
           <CardHeader>
-            <CardTitle className="text-center font-bold text-2xl">
+            <CardTitle className="text-center font-bold text-2xl text-yellow-400" >
               Login
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-gray-200">
               Se já possui uma conta, entre para utilizar todos os recursos do
               nosso sistema!
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid w-full items-center gap-4">
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="username">Nome de usuário</Label>
                 <Input
+                  className="bg-gray-200 text-stone-950"
                   type="text"
                   id="username"
                   placeholder="Evanildo"
@@ -75,9 +77,10 @@ function Login() {
                   onChange={(e) => setUsername(e.target.value)}
                 />
               </div>
-              <div className="flex flex-col space-y-1.5">
+              <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="password">Senha</Label>
                 <Input
+                  className="bg-gray-200 text-stone-950 "
                   type="password"
                   id="password"
                   placeholder="**********"
@@ -86,29 +89,30 @@ function Login() {
                 />
               </div>
             </div>
-          </CardContent>
-          <CardFooter className="flex flex-col ">
-            <div className="w-full flex flex-row justify-between">
+            <div className="w-full flex flex-row justify-between text-gray-200 pt-2">
               <div className="flex items-center">
-                <Checkbox id="check" name="check" />
+                <Checkbox className="bg-gray-200" id="check" name="check" />
                 <label className="pl-1" htmlFor="check">
                   Lembrar
                 </label>
               </div>
 
-              <div className="flex pl-1  underline underline-offset-2">
-                <a href="/register">
-                  {" "}
-                  Para se cadastrar
-                  <span className="font-bold"> clique aqui</span>
+              <div className="flex pl-1">
+                <a href="/">
+                  <span className="text-sm font-bold cursor-pointer hover:text-yellow-400 duration-500 underline hover:decoration-yellow-400"> Esqueci minha senha</span>
                 </a>
               </div>
             </div>
+          </CardContent>
+          <CardFooter className="flex flex-col mb-4">
 
-            <div className="mt-5">
-              <Button type="submit" className="font-bold text-base">
+            <div className="mt-2 mb-2 w-full ">
+              <Button type="submit" className="w-full font-bold text-base bg-stone-800 text-yellow-400 hover:bg-stone-700">
                 Entrar{" "}
-              </Button>
+              </Button> 
+            </div>
+            <div className="w-full">
+              <a href="/register" className="text-sm font-bold underline decoration-solid justify-start text-gray-200 ">Ainda não possui uma conta? <span className="cursor-pointer hover:text-yellow-400 duration-500 underline hover:decoration-yellow-400">Cadastre-se aqui</span></a>
             </div>
           </CardFooter>
         </form>
