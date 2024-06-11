@@ -1,9 +1,8 @@
 interface Transaction {
-    title: string;
-    desc: string;
-    value: string;
-    category: string;
-    color: string;
+    timestamp: string,
+    type: string,
+    value: number,
+    description: string;
 }
 
 export default Transaction

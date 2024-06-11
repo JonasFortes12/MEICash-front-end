@@ -42,6 +42,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { timeStamp } from "console";
 
 function Transactions() {
   const [title, setTitle] = useState("");
@@ -61,13 +62,14 @@ function Transactions() {
     async function getAllTransactions() {
       try {
         const resp = await transactionsService.getAll();
-        setTrans(resp.json());
+        
+        console.log(resp)
       } catch (error) {
         console.log(error);
       }
     }
     checkAuth();
-    getAllTransactions;
+    getAllTransactions();
   }, []);
 
   function logout() {
@@ -76,15 +78,14 @@ function Transactions() {
     return navigate('/login')
   }
 
-  async function handleSubmit(e: FormEvent) {
+  async function handleSubmitTransaction(e: FormEvent) {
     e.preventDefault();
 
     const newTrans = {
-      title,
-      desc,
-      value,
-      categoryName,
-      color,
+      timestamp: new Date(),
+      type: 'INCOME',
+      value: 120,
+      description: 'transação teste'
     };
 
     try {
@@ -239,7 +240,7 @@ function Transactions() {
                   </DialogDescription>
                 </DialogHeader>
 
-                <form className="space-y-6" onSubmit={handleSubmit}>
+                <form className="space-y-6" onSubmit={handleSubmitTransaction}>
                   <div className="grid grid-cols-4 items-center text-left gap-3">
                     <Label htmlFor="title">Título</Label>
                     <Input
@@ -311,22 +312,22 @@ function Transactions() {
               <CardContent>
                 <CardHeader className="grid justify-items-start">
                   <CardTitle className="font-bold text-2xl">
-                    {data.title}
+                    {data.type}
                   </CardTitle>
                   <CardDescription>
                     Valor da transação: R${data.value}
                   </CardDescription>
 
                   <div className="pt-3 text-start">
-                    <p>{data.desc}</p>{" "}
+                    <p>{data.description}</p>{" "}
                   </div>
                 </CardHeader>
 
-                <CardFooter className="grid grid-cols-2 gap-1 space-x-1 justify-end font-bold pb-0">
+                {/* <CardFooter className="grid grid-cols-2 gap-1 space-x-1 justify-end font-bold pb-0">
                   <div className="max-w-full border rounded-lg p-1 bg-lime-400 text-white border-none cursor-pointer">
                     {data.category}
                   </div>
-                </CardFooter>
+                </CardFooter> */}
               </CardContent>
             </Card>
           ))}
