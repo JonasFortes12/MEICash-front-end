@@ -51,6 +51,7 @@ function Transactions() {
   const [categoryName, setCategoryName] = useState("");
   const [color, setColor] = useState("");
   const [trans, setTrans] = useState<Transaction[]>([]);
+  const [categories, setCategories] = useState<Category[]>([])
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -63,13 +64,22 @@ function Transactions() {
       try {
         const resp = await transactionsService.getAll();
         
-        console.log(resp)
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    async function getAllCategories() {
+      try {
+        const data = await categoryService.getAll();
+        
+        setCategories(data)
       } catch (error) {
         console.log(error);
       }
     }
     checkAuth();
-    getAllTransactions();
+    getAllCategories();
+    getAllTransactions;
   }, []);
 
   function logout() {
@@ -101,14 +111,12 @@ function Transactions() {
     e.preventDefault();
 
     const newCategory: Category = {
-      categoryName,
-      color,
+      name: categoryName,
+      color: color
     };
 
     try {
       const resp = await categoryService.addCategory(newCategory);
-
-      console.log(resp);
     } catch (error) {
       console.log(error);
     }

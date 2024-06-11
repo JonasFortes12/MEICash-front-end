@@ -1,4 +1,4 @@
 interface Category {
-    categoryName: string,
+    name: string,
     color: string
 }
