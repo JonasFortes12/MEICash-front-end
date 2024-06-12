@@ -20,7 +20,7 @@ const transactionsService = {
 
     deleteTransaction: (id: string) => {
         const token = localStorage.getItem('token');
-        const res = apiClient.post(`${BASE_URL}/profile/transactions/${id}`, undefined, undefined, token)
+        const res = apiClient.delete(`${BASE_URL}/profile/transactions/${id}`, token);
 
         return res
     }

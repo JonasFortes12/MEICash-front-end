@@ -164,7 +164,8 @@ function Transactions() {
       const resp = await transactionsService.deleteTransaction(id);
 
       if (resp.ok){
-        window.location.reload();
+        const data = await transactionsService.getAll();
+        setTrans(data);
       }
     } catch (error) {
       console.log(error)
