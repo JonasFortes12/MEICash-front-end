@@ -11,8 +11,9 @@ const transactionsService = {
         return res
     },
 
-    addTransaction: (data: {}) => {
-        const res = apiClient.post(`${BASE_URL}/transactions`, data, undefined)
+    addTransaction: (data: {}, categoryId: string) => {
+        const token = localStorage.getItem('token')
+        const res = apiClient.post(`${BASE_URL}/profile/transactions/${categoryId}`, data, undefined, token)
 
         return res
     }
