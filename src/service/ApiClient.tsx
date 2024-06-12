@@ -11,7 +11,6 @@ const apiClient = {
                     'Authorization': 'Bearer ' + token,
                 },
             })
-
             return resp.json()
         }
 
@@ -22,8 +21,6 @@ const apiClient = {
                 'Content-Type': 'application/json',
             },
         })
-
-        console.log(resp)
         return resp
     },
 
@@ -38,7 +35,6 @@ const apiClient = {
                 },
                 body: JSON.stringify(data)
             })
-
             return resp
         }
 

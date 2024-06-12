@@ -16,6 +16,13 @@ const transactionsService = {
         const res = apiClient.post(`${BASE_URL}/profile/transactions/${categoryId}`, data, undefined, token)
 
         return res
+    },
+
+    searchTransaction: (data: {}) => {
+        const token = localStorage.getItem('token')
+        const res = apiClient.post(`${BASE_URL}/`, data, false, token)
+
+        return res
     }
 }
 
