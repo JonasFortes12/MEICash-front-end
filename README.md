@@ -31,8 +31,8 @@ Com este planejamento, nossa equipe percebeu que uma das funcionalidades mais ú
    
 
 
-## Uso
- - Para executar o Front-end da aplicação localmente, siga os passos deste [tutorial](....).
+## Uso 
+ - Para configurar o ambiente de desenvolvimento e executar o projeto localmente, acesse o [Tutorial](./tutorial.md)
 
 ## Tecnologias Usadas
  - TypeScript
