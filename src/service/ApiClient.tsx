@@ -1,15 +1,51 @@
 const apiClient = {
-    get: async (url: string) => {
-        console.log('ola')
+
+    get: async (url: string, token: string | null) => {
+        
+        if (token) {
+            const resp = await fetch(url, {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                },
+            })
+
+            return resp.json()
+        }
+
         const resp = await fetch(url, {
             method: 'GET',
-            headers: {},
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            },
         })
 
         console.log(resp)
-        return handleResponse(resp)
+        return resp
     },
-    post: async (url: string, data: {}, login: boolean) => {
+
+    post: async (url: string, data: {}, login?: boolean, token?: string | null) => {
+
+        if (token) {
+            console.log('token: ', token)
+            console.log('data: ', JSON.stringify(data))
+            const resp = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Accept': '*/*',
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + token,
+                },
+                body: JSON.stringify(data)
+            })
+
+            console.log(resp)
+            return resp
+        }
+
         const resp = await fetch(url, {
             method: 'POST',
             headers: {

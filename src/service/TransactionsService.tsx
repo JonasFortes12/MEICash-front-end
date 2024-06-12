@@ -5,15 +5,14 @@ const BASE_URL = 'http://20.163.168.29:8080'
 const transactionsService = {
 
     getAll: () => {
-        const res = apiClient.get(`${BASE_URL}/transactions`)
+        const token = localStorage.getItem('token')
+        const res = apiClient.get(`${BASE_URL}/profile/transactions`, token)
 
         return res
     },
-    getById: () => {
 
-    },
     addTransaction: (data: {}) => {
-        const res = apiClient.post(`${BASE_URL}/transactions`, data)
+        const res = apiClient.post(`${BASE_URL}/transactions`, data, undefined)
 
         return res
     }

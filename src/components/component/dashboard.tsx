@@ -42,6 +42,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { timeStamp } from "console";
 
 function Transactions() {
   const [title, setTitle] = useState("");
@@ -50,6 +51,7 @@ function Transactions() {
   const [categoryName, setCategoryName] = useState("");
   const [color, setColor] = useState("");
   const [trans, setTrans] = useState<Transaction[]>([]);
+  const [categories, setCategories] = useState<Category[]>([])
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -61,12 +63,22 @@ function Transactions() {
     async function getAllTransactions() {
       try {
         const resp = await transactionsService.getAll();
-        setTrans(resp.json());
+        
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    async function getAllCategories() {
+      try {
+        const data = await categoryService.getAll();
+        
+        setCategories(data)
       } catch (error) {
         console.log(error);
       }
     }
     checkAuth();
+    getAllCategories();
     getAllTransactions;
   }, []);
 
@@ -76,15 +88,14 @@ function Transactions() {
     return navigate('/login')
   }
 
-  async function handleSubmit(e: FormEvent) {
+  async function handleSubmitTransaction(e: FormEvent) {
     e.preventDefault();
 
     const newTrans = {
-      title,
-      desc,
-      value,
-      categoryName,
-      color,
+      timestamp: new Date(),
+      type: 'INCOME',
+      value: 120,
+      description: 'transação teste'
     };
 
     try {
@@ -100,14 +111,12 @@ function Transactions() {
     e.preventDefault();
 
     const newCategory: Category = {
-      categoryName,
-      color,
+      name: categoryName,
+      color: color
     };
 
     try {
       const resp = await categoryService.addCategory(newCategory);
-
-      console.log(resp);
     } catch (error) {
       console.log(error);
     }
@@ -239,7 +248,7 @@ function Transactions() {
                   </DialogDescription>
                 </DialogHeader>
 
-                <form className="space-y-6" onSubmit={handleSubmit}>
+                <form className="space-y-6" onSubmit={handleSubmitTransaction}>
                   <div className="grid grid-cols-4 items-center text-left gap-3">
                     <Label htmlFor="title">Título</Label>
                     <Input
@@ -311,22 +320,22 @@ function Transactions() {
               <CardContent>
                 <CardHeader className="grid justify-items-start">
                   <CardTitle className="font-bold text-2xl">
-                    {data.title}
+                    {data.type}
                   </CardTitle>
                   <CardDescription>
                     Valor da transação: R${data.value}
                   </CardDescription>
 
                   <div className="pt-3 text-start">
-                    <p>{data.desc}</p>{" "}
+                    <p>{data.description}</p>{" "}
                   </div>
                 </CardHeader>
 
-                <CardFooter className="grid grid-cols-2 gap-1 space-x-1 justify-end font-bold pb-0">
+                {/* <CardFooter className="grid grid-cols-2 gap-1 space-x-1 justify-end font-bold pb-0">
                   <div className="max-w-full border rounded-lg p-1 bg-lime-400 text-white border-none cursor-pointer">
                     {data.category}
                   </div>
-                </CardFooter>
+                </CardFooter> */}
               </CardContent>
             </Card>
           ))}
