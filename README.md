@@ -1,3 +1,4 @@
+# MEICash Front-end
 ## Sobre o projeto:
 O MEICash é um sistema de apoio à organização financeira de Micro Empreendedores Individuais (MEIs).
 
@@ -11,25 +12,27 @@ Com este planejamento, nossa equipe percebeu que uma das funcionalidades mais ú
 
 >[!NOTE]
 >
->Esta é o repositório oferece uma interface amigável ao usuário para gestão e organização financeira. Os serviços utilizados nesta aplicação provêm do repositório [API Java Spring](https://github.com/JonasFortes12/MEICash-server/tree/main).
+>Este repositório oferece uma interface amigável ao usuário para a gestão e organização financeira do seu negócio. Os serviços utilizados nesta aplicação provêm do repositório [API Java Spring](https://github.com/JonasFortes12/MEICash-server/tree/main).
 
 
 ## Arquitetura da aplicação
 ![image](https://github.com/JonasFortes12/MEICash-server/assets/43821439/5fc2e482-277c-4de5-a3d5-8824f541cbc1)
 
-## Fluxo de Trabalho (A fazer)
+## Fluxo de Trabalho
 
 - Idenficação e criação das principais necessidades do cliente. 
-  ![image](https://github.com/JonasFortes12/MEICash-front-end/assets/112669877/4cf66736-e845-4f7e-bc0e-3a683159a448)
+  ![image](https://github.com/JonasFortes12/MEICash-front-end/assets/43821439/8a3fa8b3-ed2d-4c71-b4ef-f6b92e659ed3)
+
 - Criação de features baseadas em User Stories. Para consultar todas as issues fechadas, acesse [Issues](https://github.com/JonasFortes12/MEICash-front-end/issues?q=is%3Aissue+is%3Aclosed).
   ![image](https://github.com/JonasFortes12/MEICash-front-end/assets/112669877/85d868bd-9893-451d-9897-0732a4fccebe)
+  
 - Implementação das funcionalidades e atualização constante do repositório através de pull-requests. Para consultar todos os pull-requests fechados, acesse [Pull-requests](https://github.com/JonasFortes12/MEICash-front-end/pulls?q=is%3Apr+is%3Aclosed).
   ![image](https://github.com/JonasFortes12/MEICash-front-end/assets/112669877/35f9a389-2288-4edf-aa57-95c2959116c1)
    
 
 
-## Uso (A fazer)
- - adiocionar aqui aquele tutorial de configuração do ambiente de desenvolvimento local
+## Uso
+ - Para executar o Front-end da aplicação localmente, siga os passos deste [tutorial](....).
 
 ## Tecnologias Usadas
  - TypeScript
