@@ -51,6 +51,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "../ui/select";
+import userService from "@/service/UserService";
+import User from "@/interfaces/User";
 
 function Transactions() {
   const [title, setTitle] = useState("");
@@ -60,6 +62,7 @@ function Transactions() {
   const [color, setColor] = useState("");
   const [trans, setTrans] = useState<Transaction[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
+  const [user, setUser] = useState( { companyName: '', username: '' } )
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const navigate = useNavigate();
@@ -70,12 +73,18 @@ function Transactions() {
         return navigate("/login");
       }
     }
+    async function getUser() {
+      try {
+        const resp = await userService.getUser();
+        setUser(resp);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     async function getAllTransactions() {
       try {
         const resp = await transactionsService.getAll();
-
-        console.log(resp)
-        setTrans(resp)
+        setTrans(resp);
       } catch (error) {
         console.log(error);
       }
@@ -83,13 +92,13 @@ function Transactions() {
     async function getAllCategories() {
       try {
         const data = await categoryService.getAll();
-
         setCategories(data);
       } catch (error) {
         console.log(error);
       }
     }
     checkAuth();
+    getUser();
     getAllCategories();
     getAllTransactions();
   }, []);
@@ -168,10 +177,10 @@ function Transactions() {
       </div>
   
       <div className="w-4/5 min-h-screen space-y-4 text-center p-7 overflow-hidden">
-        <div className="border-b-2 border-gray-200 justify-between flex overflow-hidden">
+        <div className="border-b-2 border-gray-200 justify-between flex overflow-hidden pt-3">
           <div className="text-start font-bold text-2xl text-stone-700">
             <h1>
-              Bem-vindo, <span className="text-yellow-400">xxxxxxxxxx</span>!
+              Bem-vindo, <span className="text-yellow-400">{user.username}</span>!
             </h1>
           </div>
           <div className="pt-2 flex space-x-5 text-stone-800">
@@ -199,7 +208,7 @@ function Transactions() {
         </div>
   
         <h1 className="text-2xl font-bold pt-2 text-stone-700">
-          Histórico de Transações - xxxxxxx
+          Histórico de Transações - {user.companyName}
         </h1>
   
         <div className="flex items-center justify-between">
