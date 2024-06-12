@@ -27,7 +27,7 @@ const apiClient = {
         return resp
     },
 
-    post: async (url: string, data: {}, login?: boolean, token?: string | null) => {
+    post: async (url: string, data?: {}, login?: boolean, token?: string | null) => {
 
         if (token) {
             const resp = await fetch(url, {

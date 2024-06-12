@@ -1,4 +1,5 @@
 interface Transaction {
+    id: string,
     title: string,
     timestamp: string,
     type: string,
