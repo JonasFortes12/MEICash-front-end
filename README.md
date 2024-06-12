@@ -17,7 +17,7 @@ Com este planejamento, nossa equipe percebeu que uma das funcionalidades mais ú
 ## Arquitetura da aplicação
 ![image](https://github.com/JonasFortes12/MEICash-server/assets/43821439/5fc2e482-277c-4de5-a3d5-8824f541cbc1)
 
-## Fluxo de Trabalho (A fazer)
+## Fluxo de Trabalho 
 
 - Idenficação e criação das principais necessidades do cliente. 
   ![image](https://github.com/JonasFortes12/MEICash-front-end/assets/112669877/4cf66736-e845-4f7e-bc0e-3a683159a448)
@@ -28,8 +28,8 @@ Com este planejamento, nossa equipe percebeu que uma das funcionalidades mais ú
    
 
 
-## Uso (A fazer)
- - adiocionar aqui aquele tutorial de configuração do ambiente de desenvolvimento local
+## Uso 
+ - Para rodar o configurar o ambiente de desenvolvimento e rodar o projeto, acesse o [Tutorial](./tutorial.md)
 
 ## Tecnologias Usadas
  - TypeScript
