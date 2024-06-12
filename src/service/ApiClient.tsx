@@ -30,19 +30,15 @@ const apiClient = {
     post: async (url: string, data: {}, login?: boolean, token?: string | null) => {
 
         if (token) {
-            console.log('token: ', token)
-            console.log('data: ', JSON.stringify(data))
             const resp = await fetch(url, {
                 method: 'POST',
                 headers: {
-                    'Accept': '*/*',
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + token,
                 },
                 body: JSON.stringify(data)
             })
 
-            console.log(resp)
             return resp
         }
 
