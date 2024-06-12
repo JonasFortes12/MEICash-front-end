@@ -1,5 +1,3 @@
-# MEICash Front-end
-
 ### Preparando o ambiente de desenvolvimento:
 
 - Clone este repositório.
