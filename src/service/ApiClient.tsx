@@ -23,11 +23,10 @@ const apiClient = {
             },
         })
 
-        console.log(resp)
         return resp
     },
 
-    post: async (url: string, data: {}, login?: boolean, token?: string | null) => {
+    post: async (url: string, data?: {}, login?: boolean, token?: string | null) => {
 
         if (token) {
             const resp = await fetch(url, {
@@ -52,6 +51,19 @@ const apiClient = {
         }) 
 
         if (login) {return resp.json()}
+
+        return resp
+    },
+
+    delete: async (url: string, token: string | null) => {
+        const resp = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            },
+        }) 
 
         return resp
     }

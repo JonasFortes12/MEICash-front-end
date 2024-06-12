@@ -34,6 +34,7 @@ import { FaUser } from "react-icons/fa6";
 import { FaBell } from "react-icons/fa6";
 import { FaCirclePlus } from "react-icons/fa6";
 import { IoLogOutOutline } from "react-icons/io5";
+import { BsXSquareFill } from "react-icons/bs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -62,9 +63,10 @@ function Transactions() {
   const [color, setColor] = useState("");
   const [trans, setTrans] = useState<Transaction[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
-  const [user, setUser] = useState( { companyName: '', username: '' } )
+  const [user, setUser] = useState({ companyName: "", username: "" });
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedType, setSelectedType] = useState("");
+  const [selectedTrans, setSelectedTrans] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -89,19 +91,20 @@ function Transactions() {
         console.log(error);
       }
     }
-    async function getAllCategories() {
-      try {
-        const data = await categoryService.getAll();
-        setCategories(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
     checkAuth();
     getUser();
     getAllCategories();
     getAllTransactions();
   }, []);
+
+  async function getAllCategories() {
+    try {
+      const data = await categoryService.getAll();
+      setCategories(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   function logout() {
     authProvider.logout();
@@ -117,7 +120,7 @@ function Transactions() {
       timestamp: new Date(),
       type: selectedType,
       value: value,
-      description: desc
+      description: desc,
     };
 
     const id = selectedCategory;
@@ -126,7 +129,7 @@ function Transactions() {
       const resp = await transactionsService.addTransaction(newTrans, id);
 
       if (resp.ok) {
-        window.location.reload()
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);
@@ -145,10 +148,27 @@ function Transactions() {
       const resp = await categoryService.addCategory(newCategory);
 
       if (resp.ok) {
-        window.location.reload()
+        window.location.reload();
       }
     } catch (error) {
       console.log(error);
+    }
+  }
+
+  async function handleSubmitDelete(e: FormEvent) {
+    e.preventDefault();
+
+    const id = selectedTrans;
+
+    try {
+      const resp = await transactionsService.deleteTransaction(id);
+
+      if (resp.ok){
+        const data = await transactionsService.getAll();
+        setTrans(data);
+      }
+    } catch (error) {
+      console.log(error)
     }
   }
 
@@ -175,12 +195,13 @@ function Transactions() {
           </ul>
         </div>
       </div>
-  
+
       <div className="w-4/5 min-h-screen space-y-4 text-center p-7 overflow-hidden">
         <div className="border-b-2 border-gray-200 justify-between flex overflow-hidden pt-3">
           <div className="text-start font-bold text-2xl text-stone-700">
             <h1>
-              Bem-vindo, <span className="text-yellow-400">{user.username}</span>!
+              Bem-vindo,{" "}
+              <span className="text-yellow-400">{user.username}</span>!
             </h1>
           </div>
           <div className="pt-2 flex space-x-5 text-stone-800">
@@ -206,14 +227,18 @@ function Transactions() {
             </DropdownMenu>
           </div>
         </div>
-  
+
         <h1 className="text-2xl font-bold pt-2 text-stone-700">
           Histórico de Transações - {user.companyName}
         </h1>
-  
+
         <div className="flex items-center justify-between">
           <form className="flex items-center gap-2 w-1/2">
-            <Input name="id" placeholder="Título da transação" className="w-full"/>
+            <Input
+              name="id"
+              placeholder="Título da transação"
+              className="w-full"
+            />
             <Button type="submit" variant={"secondary"}>
               <Search className="w-4 h-4 mr-2" />
               Filtrar Resultados
@@ -227,7 +252,7 @@ function Transactions() {
                   Nova categoria
                 </Button>
               </DialogTrigger>
-  
+
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Registrar nova categoria</DialogTitle>
@@ -235,7 +260,7 @@ function Transactions() {
                     Registrar uma nova categoria no sistema
                   </DialogDescription>
                 </DialogHeader>
-  
+
                 <form className="space-y-6" onSubmit={handleSubmitCategory}>
                   <div className="grid grid-cols-2 items-center text-left gap-3">
                     <Label htmlFor="category">Nome da categoria</Label>
@@ -255,7 +280,7 @@ function Transactions() {
                       />
                     </p>
                   </div>
-  
+
                   <DialogFooter>
                     <DialogClose>
                       <Button variant={"outline"}>Cancelar</Button>
@@ -272,7 +297,7 @@ function Transactions() {
                   Nova transação
                 </Button>
               </DialogTrigger>
-  
+
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Registrar transação</DialogTitle>
@@ -280,7 +305,7 @@ function Transactions() {
                     Registrar uma nova transação no sistema
                   </DialogDescription>
                 </DialogHeader>
-  
+
                 <form className="space-y-6" onSubmit={handleSubmitTransaction}>
                   <div className="grid grid-cols-4 items-center text-left gap-3">
                     <Label htmlFor="title">Título</Label>
@@ -292,7 +317,7 @@ function Transactions() {
                       required
                     />
                   </div>
-  
+
                   <div className="grid grid-cols-4 items-center text-left gap-3">
                     <Label htmlFor="value">Valor</Label>
                     <Input
@@ -304,7 +329,7 @@ function Transactions() {
                       required
                     />
                   </div>
-  
+
                   <div className="grid grid-cols-2 items-center text-left gap-3">
                     <Label htmlFor="desc">Descrição da transação</Label>
                     <Input
@@ -315,7 +340,7 @@ function Transactions() {
                       required
                     />
                   </div>
-  
+
                   <div className="grid grid-cols-2 items-center text-left gap-3">
                     <Label htmlFor="category">Categoria</Label>
                     <Select
@@ -344,7 +369,7 @@ function Transactions() {
                       </SelectContent>
                     </Select>
                   </div>
-  
+
                   <div className="grid grid-cols-2 items-center text-left gap-3">
                     <Label htmlFor="category">Tipo de Transação</Label>
                     <Select
@@ -366,7 +391,7 @@ function Transactions() {
                       </SelectContent>
                     </Select>
                   </div>
-  
+
                   <DialogFooter>
                     <DialogClose>
                       <Button variant={"outline"}>Cancelar</Button>
@@ -378,27 +403,38 @@ function Transactions() {
             </Dialog>
           </div>
         </div>
-  
+
         <div className="grid grid-cols-2 gap-4 border rounded-lg p-3">
           {trans.map((data, index) => (
             <Card key={index} className="justify-items-start">
               <CardContent>
                 <CardHeader className="grid justify-items-start">
-                  <CardTitle className="font-bold text-2xl text-stone-700">
-                    {data.title}
+                  <CardTitle className="w-full font-bold text-2xl text-stone-700 flex justify-between">
+                    <div>{data.title}</div>
+                    <form
+                      onClick={() => setSelectedTrans(data.id)}
+                      onSubmit={handleSubmitDelete}
+                      className="pt-2 text-lg"
+                    >
+                      <button type="submit">
+                        <BsXSquareFill className="cursor-pointer" />
+                      </button>
+                    </form>
                   </CardTitle>
                   <CardDescription>
                     Valor da transação: R${data.value}
                   </CardDescription>
-  
+
                   <div className="pt-3 text-start">
                     <p>
-                      <span className="font-bold">Descrição:</span> {data.description}
+                      <span className="font-bold">Descrição:</span>{" "}
+                      {data.description}
                     </p>
                   </div>
                   <div className="pt-3 text-start">
                     <p>
-                      <span className="font-bold">Tipo de transação: </span>{data.type}
+                      <span className="font-bold">Tipo de transação: </span>
+                      {data.type}
                     </p>
                   </div>
                 </CardHeader>
@@ -417,7 +453,6 @@ function Transactions() {
       </div>
     </div>
   );
-  
 }
 
 export default Transactions;
