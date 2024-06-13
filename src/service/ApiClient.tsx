@@ -66,15 +66,4 @@ const apiClient = {
     }
 }
 
-const handleResponse = (resp: Response) => { 
-    if (resp.status === 0) {
-        const error = resp.statusText
-        console.log(error)
-        throw new Error(error)
-    }
-
-    console.log(resp.json())
-    return resp.json()
-}
-
 export default apiClient
