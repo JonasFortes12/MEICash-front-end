@@ -10,6 +10,9 @@ COPY package.json pnpm-lock.yaml ./
 # Copiar o restante do código
 COPY . .
 
+# Install dotenv
+RUN npm i dotenv 
+
 # Instalar dependências
 RUN npm install
 
