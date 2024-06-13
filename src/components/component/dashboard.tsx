@@ -34,6 +34,7 @@ import { FaUser } from "react-icons/fa6";
 import { FaBell } from "react-icons/fa6";
 import { FaCirclePlus } from "react-icons/fa6";
 import { IoLogOutOutline } from "react-icons/io5";
+import { BsXSquareFill } from "react-icons/bs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -65,6 +66,7 @@ function Transactions() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedType, setSelectedType] = useState("");
   const [search, setSearch] = useState("");
+  const [selectedTrans, setSelectedTrans] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -89,19 +91,20 @@ function Transactions() {
         console.log(error);
       }
     }
-    async function getAllCategories() {
-      try {
-        const data = await categoryService.getAll();
-        setCategories(data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
     checkAuth();
     getUser();
     getAllCategories();
     getAllTransactions();
   }, []);
+
+  async function getAllCategories() {
+    try {
+      const data = await categoryService.getAll();
+      setCategories(data);
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   function logout() {
     authProvider.logout();
@@ -160,6 +163,23 @@ function Transactions() {
 
       if (resp.ok) {
         setTrans(resp)
+      }
+    } catch(error) {
+      console.log(error)
+    }
+  }
+
+  async function handleSubmitDelete(e: FormEvent) {
+    e.preventDefault();
+
+    const id = selectedTrans;
+
+    try {
+      const resp = await transactionsService.deleteTransaction(id);
+
+      if (resp.ok){
+        const data = await transactionsService.getAll();
+        setTrans(data);
       }
     } catch (error) {
       console.log(error)
@@ -408,8 +428,17 @@ function Transactions() {
             <Card key={index} className="justify-items-start">
               <CardContent>
                 <CardHeader className="grid justify-items-start">
-                  <CardTitle className="font-bold text-2xl text-stone-700">
-                    {data.title}
+                  <CardTitle className="w-full font-bold text-2xl text-stone-700 flex justify-between">
+                    <div>{data.title}</div>
+                    <form
+                      onClick={() => setSelectedTrans(data.id)}
+                      onSubmit={handleSubmitDelete}
+                      className="pt-2 text-lg"
+                    >
+                      <button type="submit">
+                        <BsXSquareFill className="cursor-pointer" />
+                      </button>
+                    </form>
                   </CardTitle>
                   <CardDescription>
                     Valor da transação: R${data.value}
