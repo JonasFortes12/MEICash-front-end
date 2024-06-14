@@ -11,13 +11,17 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Checkbox } from "@/components/ui/checkbox";
 import { FormEvent, useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 import User from "@/interfaces/User";
 import userService from "@/service/UserService";
 import authProvider from "@/service/AuthProvider";
 
-import { BsFillArrowLeftCircleFill } from "react-icons/bs";
+import {
+  BsFillArrowLeftCircleFill,
+  BsFillInfoSquareFill,
+} from "react-icons/bs";
+import toast from "react-hot-toast";
 
 function Register() {
   const [companyName, setCompanyName] = useState("");
@@ -41,12 +45,12 @@ function Register() {
 
   useEffect(() => {
     function checkAuth() {
-      if (authProvider.checkAuth()){
-        return navigate('/')
+      if (authProvider.checkAuth()) {
+        return navigate("/");
       }
     }
     checkAuth();
-  })
+  });
 
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -123,15 +127,46 @@ function Register() {
 
     try {
       const resp = await userService.createUser(user);
-      console.log(resp.status)
+      console.log(resp.status);
 
-      if (resp.status === 200){
-        console.log('Cadastro realizado com sucesso');
-        return navigate('/')
+      if (resp.status == 200) {
+        toast("Cadastro realizado com sucesso!", {
+          icon: <BsFillInfoSquareFill className="text-green-400" />,
+          style: {
+            background: "#292524",
+            color: "#e5e7eb",
+          },
+        });
+        return navigate("/");
       }
 
-      navigate('/register')
+      if (resp.status == 400) {
+        toast("Usuário ou email já cadastrado!", {
+          icon: <BsFillInfoSquareFill className="text-red-400" />,
+          style: {
+            background: "#292524",
+            color: "#e5e7eb",
+          },
+        });
+      }
+
+      toast("Erro ao realizar o cadastro!", {
+        icon: <BsFillInfoSquareFill className="text-red-400" />,
+        style: {
+          background: "#292524",
+          color: "#e5e7eb",
+        },
+      });
+
+      return navigate("/register");
     } catch (error) {
+      toast("Erro ao realizar o cadastro!", {
+        icon: <BsFillInfoSquareFill className="text-red-400" />,
+        style: {
+          background: "#292524",
+          color: "#e5e7eb",
+        },
+      });
       console.log(error);
     }
   }
@@ -140,7 +175,10 @@ function Register() {
     <div className="h-fit w-full flex justify-center items-center bg-gray-200 p-4 sm:p-6 md:p-8">
       <Card className="h-fit my-10 mx-auto w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl border-none bg-neutral-700 drop-shadow-2xl rounded-sm p-6 sm:p-8 md:p-10 lg:p-12 shadow-stone-400 shadow-[7px_7px_6px_0_rgba(0,0,0,0.1)]">
         <div className="text-3xl w-fit">
-          <a href="/login" className="cursor-pointer text-gray-200 hover:text-yellow-400">
+          <a
+            href="/login"
+            className="cursor-pointer text-gray-200 hover:text-yellow-400"
+          >
             <BsFillArrowLeftCircleFill />
           </a>
         </div>
@@ -158,7 +196,7 @@ function Register() {
               <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="companyName">Nome da empresa</Label>
                 <Input
-                className="bg-gray-200 text-stone-950"
+                  className="bg-gray-200 text-stone-950"
                   autoComplete="off"
                   type="text"
                   id="companyName"
@@ -171,8 +209,8 @@ function Register() {
               <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="firstName">Primeiro nome</Label>
                 <Input
-                className="bg-gray-200 text-stone-950"
-                autoComplete="off"
+                  className="bg-gray-200 text-stone-950"
+                  autoComplete="off"
                   type="text"
                   id="firstName"
                   placeholder="Evanildo"
@@ -184,8 +222,8 @@ function Register() {
               <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="lastName">Último nome</Label>
                 <Input
-                className="bg-gray-200 text-stone-950"
-                autoComplete="off"
+                  className="bg-gray-200 text-stone-950"
+                  autoComplete="off"
                   type="text"
                   id="lastName"
                   placeholder="Batista"
@@ -197,8 +235,8 @@ function Register() {
               <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="username">Nome de usuário</Label>
                 <Input
-                className="bg-gray-200 text-stone-950"
-                autoComplete="off"
+                  className="bg-gray-200 text-stone-950"
+                  autoComplete="off"
                   type="text"
                   id="username"
                   placeholder="Evanildo Batista"
@@ -210,8 +248,8 @@ function Register() {
               <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="email">Email</Label>
                 <Input
-                className="bg-gray-200 text-stone-950"
-                autoComplete="off"
+                  className="bg-gray-200 text-stone-950"
+                  autoComplete="off"
                   type="email"
                   id="email"
                   placeholder="exemplo@outlook.com"
@@ -223,8 +261,8 @@ function Register() {
               <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="password">Senha</Label>
                 <Input
-                className="bg-gray-200 text-stone-950"
-                autoComplete="off"
+                  className="bg-gray-200 text-stone-950"
+                  autoComplete="off"
                   type="password"
                   id="password"
                   placeholder="**********"
@@ -244,20 +282,32 @@ function Register() {
 
               <div className="flex pl-1">
                 <a href="/">
-                  <span className="text-sm font-bold cursor-pointer hover:text-yellow-400 duration-500 underline hover:decoration-yellow-400">Não consigo me cadastrar</span>
+                  <span className="text-sm font-bold cursor-pointer hover:text-yellow-400 duration-500 underline hover:decoration-yellow-400">
+                    Não consigo me cadastrar
+                  </span>
                 </a>
               </div>
             </div>
           </CardContent>
           <CardFooter className="flex flex-col ">
-
-          <div className="mt-2 mb-2 w-full ">
-              <Button type="submit" className="w-full font-bold text-base bg-stone-800 text-yellow-400 hover:bg-stone-700">
+            <div className="mt-2 mb-2 w-full ">
+              <Button
+                type="submit"
+                className="w-full font-bold text-base bg-stone-800 text-yellow-400 hover:bg-stone-700"
+              >
                 Cadastrar{" "}
-              </Button> 
+              </Button>
             </div>
             <div className="w-full">
-              <a href="/login" className="text-sm font-bold underline decoration-solid justify-start text-gray-200 ">Já possui uma conta? <span className="cursor-pointer hover:text-yellow-400 duration-500 underline hover:decoration-yellow-400">Entre aqui</span></a>
+              <a
+                href="/login"
+                className="text-sm font-bold underline decoration-solid justify-start text-gray-200 "
+              >
+                Já possui uma conta?{" "}
+                <span className="cursor-pointer hover:text-yellow-400 duration-500 underline hover:decoration-yellow-400">
+                  Entre aqui
+                </span>
+              </a>
             </div>
           </CardFooter>
         </form>
