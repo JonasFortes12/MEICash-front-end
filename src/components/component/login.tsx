@@ -51,15 +51,15 @@ function Login() {
   }
 
   return (
-    <div className="h-dvh w-dvh content-center bg-gray-200">
+    <div className="h-dvh w-dvh flex justify-center items-center bg-gray-200 p-4 sm:p-6 md:p-8">
 
-      <Card className="border-none m-auto h-fit w-2/6 bg-neutral-700 drop-shadow-2xl rounded-sm p-12 shadow-stone-400 shadow-md shadow-[7px_7px_6px_0_rgba(0,0,0,0.1)]">
+      <Card className="border-none w-full max-w-md bg-neutral-700 drop-shadow-2xl rounded-sm p-6 sm:p-8 md:p-12 shadow-stone-400 shadow-[7px_7px_6px_0_rgba(0,0,0,0.1)]">
         <form onSubmit={handleSubmit}>
           <CardHeader>
             <CardTitle className="text-center font-bold text-2xl text-yellow-400" >
               Login
             </CardTitle>
-            <CardDescription className="text-gray-200">
+            <CardDescription className="text-gray-200 text-center">
               Se já possui uma conta, entre para utilizar todos os recursos do
               nosso sistema!
             </CardDescription>
@@ -93,7 +93,7 @@ function Login() {
               <div className="flex items-center">
                 <Checkbox className="bg-gray-200" id="check" name="check" />
                 <label className="pl-1" htmlFor="check">
-                  Lembrar
+                  Lembrar-me
                 </label>
               </div>
 

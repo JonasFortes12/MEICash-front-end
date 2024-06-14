@@ -191,8 +191,9 @@ function Transactions() {
   }
 
   return (
-    <div className="w-full min-h-screen flex overflow-x-auto">
-      <div className="min-h-screen w-1/5 flex flex-col bg-stone-800">
+    <div className="w-full min-h-screen flex flex-col md:flex-row overflow-x-auto">
+      {/* Sidebar */}
+      <div className="md:min-h-screen min-h-64 md:w-1/5 flex flex-col bg-stone-800">
         <div className="text-center p-6 pb-1">
           <a className="text-gray-200 text-3xl font-bold cursor-pointer">
             Mei<span className="text-yellow-400">Cash</span>
@@ -206,16 +207,13 @@ function Transactions() {
             <li className="cursor-pointer hover:text-yellow-400 duration-500">
               <a href="/">Histórico de transações</a>
             </li>
-            <li className="cursor-default">xxxxxxxxxx</li>
-            <li className="cursor-default">xxxxxxxxxx</li>
-            <li className="cursor-default">xxxxxxxxxx</li>
-            <li className="cursor-default">xxxxxxxxxx</li>
           </ul>
         </div>
       </div>
-
-      <div className="w-4/5 min-h-screen space-y-4 text-center p-7 overflow-hidden">
-        <div className="border-b-2 border-gray-200 justify-between flex overflow-hidden pt-3">
+  
+      {/* Main Content */}
+      <div className="w-full md:w-4/5 min-h-screen space-y-4 text-center p-4 md:p-7 overflow-hidden">
+        <div className="border-b-2 border-gray-200 flex flex-col md:flex-row justify-between overflow-hidden pt-3">
           <div className="text-start font-bold text-2xl text-stone-700">
             <h1>
               Bem-vindo,{" "}
@@ -245,14 +243,14 @@ function Transactions() {
             </DropdownMenu>
           </div>
         </div>
-
+  
         <h1 className="text-2xl font-bold pt-2 text-stone-700">
           Histórico de Transações - {user.companyName}
         </h1>
-
-        <div className="flex items-center justify-between">
+  
+        <div className="flex flex-col md:flex-row items-center justify-between">
           <form
-            className="flex items-center gap-2 w-1/2"
+            className="flex items-center gap-2 w-full md:w-1/2"
             onSubmit={handleSubmitSearch}
           >
             <Input
@@ -267,7 +265,7 @@ function Transactions() {
               Filtrar Resultados
             </Button>
           </form>
-          <div className="space-x-1">
+          <div className="space-x-1 mt-4 md:mt-0">
             <Dialog>
               <DialogTrigger>
                 <Button className="bg-stone-800 hover:bg-gray-800 duration-500">
@@ -275,7 +273,6 @@ function Transactions() {
                   Nova categoria
                 </Button>
               </DialogTrigger>
-
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Registrar nova categoria</DialogTitle>
@@ -283,18 +280,17 @@ function Transactions() {
                     Registrar uma nova categoria no sistema
                   </DialogDescription>
                 </DialogHeader>
-
                 <form className="space-y-6" onSubmit={handleSubmitCategory}>
                   <div className="grid grid-cols-2 items-center text-left gap-3">
                     <Label htmlFor="category">Nome da categoria</Label>
                     <Input
-                      className="col-span-4"
+                      className="col-span-2"
                       id="category"
                       value={categoryName}
                       onChange={(e) => setCategoryName(e.target.value)}
                       required
                     />
-                    <p className="flex">
+                    <p className="flex col-span-2">
                       Escolha a cor desejada:
                       <input
                         type="color"
@@ -304,12 +300,15 @@ function Transactions() {
                     </p>
                   </div>
 
-                  <DialogFooter>
-                    <DialogClose>
-                      <Button variant={"outline"}>Cancelar</Button>
+                  <DialogFooter className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+                    <DialogClose className="flex-1">
+                      <Button variant={"outline"} className="w-full" >Cancelar</Button>
                     </DialogClose>
-                    <Button type="submit">Registrar</Button>
+                    <DialogClose className="flex-1">
+                      <Button type="submit" className="w-full">Registrar</Button>
+                    </DialogClose>
                   </DialogFooter>
+
                 </form>
               </DialogContent>
             </Dialog>
@@ -320,7 +319,6 @@ function Transactions() {
                   Nova transação
                 </Button>
               </DialogTrigger>
-
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>Registrar transação</DialogTitle>
@@ -328,42 +326,38 @@ function Transactions() {
                     Registrar uma nova transação no sistema
                   </DialogDescription>
                 </DialogHeader>
-
                 <form className="space-y-6" onSubmit={handleSubmitTransaction}>
-                  <div className="grid grid-cols-4 items-center text-left gap-3">
+                  <div className="grid grid-cols-2 items-center text-left gap-3">
                     <Label htmlFor="title">Título</Label>
                     <Input
-                      className="col-span-4"
+                      className="col-span-2"
                       id="title"
                       value={title}
                       onChange={(e) => setTitle(e.target.value)}
                       required
                     />
                   </div>
-
-                  <div className="grid grid-cols-4 items-center text-left gap-3">
+                  <div className="grid grid-cols-2 items-center text-left gap-3">
                     <Label htmlFor="value">Valor</Label>
                     <Input
                       type="number"
-                      className="col-span-4"
+                      className="col-span-2"
                       id="value"
                       value={value}
                       onChange={(e) => setValue(e.target.value)}
                       required
                     />
                   </div>
-
                   <div className="grid grid-cols-2 items-center text-left gap-3">
                     <Label htmlFor="desc">Descrição da transação</Label>
                     <Input
-                      className="col-span-4"
+                      className="col-span-2"
                       id="desc"
                       value={desc}
                       onChange={(e) => setDesc(e.target.value)}
                       required
                     />
                   </div>
-
                   <div className="grid grid-cols-2 items-center text-left gap-3">
                     <Label htmlFor="category">Categoria</Label>
                     <Select
@@ -373,7 +367,7 @@ function Transactions() {
                       }}
                       required
                     >
-                      <SelectTrigger className="col-span-4">
+                      <SelectTrigger className="col-span-2">
                         <SelectValue placeholder="Selecione uma categoria" />
                       </SelectTrigger>
                       <SelectContent>
@@ -392,7 +386,6 @@ function Transactions() {
                       </SelectContent>
                     </Select>
                   </div>
-
                   <div className="grid grid-cols-2 items-center text-left gap-3">
                     <Label htmlFor="category">Tipo de Transação</Label>
                     <Select
@@ -402,7 +395,7 @@ function Transactions() {
                       }}
                       required
                     >
-                      <SelectTrigger className="col-span-4">
+                      <SelectTrigger className="col-span-2">
                         <SelectValue placeholder="Selecione um tipo" />
                       </SelectTrigger>
                       <SelectContent>
@@ -415,19 +408,23 @@ function Transactions() {
                     </Select>
                   </div>
 
-                  <DialogFooter>
-                    <DialogClose>
-                      <Button variant={"outline"}>Cancelar</Button>
+                  <DialogFooter className="flex flex-col md:flex-row space-y-2 md:space-y-0 md:space-x-2">
+                    <DialogClose className="flex-1">
+                      <Button variant={"outline"} className="w-full" >Cancelar</Button>
                     </DialogClose>
-                    <Button type="submit">Registrar</Button>
+                    <DialogClose className="flex-1">
+                      <Button type="submit" className="w-full">Registrar</Button>
+                    </DialogClose>
                   </DialogFooter>
+
+
                 </form>
               </DialogContent>
             </Dialog>
           </div>
         </div>
-
-        <div className="grid grid-cols-2 gap-4 border rounded-lg p-3">
+  
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 border rounded-lg p-3">
           {trans.length == 0 ? (
             <div className="text-start">
               <p>Sem transações cadastradas!</p>
@@ -452,7 +449,6 @@ function Transactions() {
                     <CardDescription>
                       Valor da transação: R${data.value}
                     </CardDescription>
-
                     <div className="pt-3 text-start">
                       <p>
                         <span className="font-bold">Descrição:</span>{" "}
@@ -469,7 +465,7 @@ function Transactions() {
                 </CardContent>
                 <CardFooter className="h-max space-x-1 justify-end font-bold pl-10">
                   <div
-                    className="w-1/3 border rounded-lg p-1 text-white border-none cursor-pointer"
+                    className="w-full md:w-1/3 border rounded-lg p-1 text-white border-none cursor-pointer"
                     style={{ backgroundColor: data.categoryColor }}
                   >
                     {data.categoryName}
@@ -482,6 +478,8 @@ function Transactions() {
       </div>
     </div>
   );
+  
+    
 }
 
 export default Transactions;

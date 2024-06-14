@@ -68,8 +68,8 @@ function Register() {
   }
 
   return (
-    <div className="h-fit w-dvh content-center bg-gray-200">
-      <Card className="my-10 mx-auto h-fit w-1/3 border-none bg-neutral-700 drop-shadow-2xl rounded-sm p-10 shadow-stone-400 shadow-md shadow-[7px_7px_6px_0_rgba(0,0,0,0.1)] ">
+    <div className="h-fit w-full flex justify-center items-center bg-gray-200 p-4 sm:p-6 md:p-8">
+      <Card className="my-10 mx-auto w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl border-none bg-neutral-700 drop-shadow-2xl rounded-sm p-6 sm:p-8 md:p-10 lg:p-12 shadow-stone-400 shadow-[7px_7px_6px_0_rgba(0,0,0,0.1)]">
         <div className="text-3xl w-fit">
           <a href="/login" className="cursor-pointer text-gray-200 hover:text-yellow-400">
             <BsFillArrowLeftCircleFill />
@@ -80,7 +80,7 @@ function Register() {
             <CardTitle className="text-center font-bold text-2xl text-yellow-400">
               Cadastro
             </CardTitle>
-            <CardDescription className="text-gray-200">
+            <CardDescription className="text-gray-200 text-center">
               Cadastre-se para utilizar todos os recursos do nosso sistema!
             </CardDescription>
           </CardHeader>
@@ -163,7 +163,7 @@ function Register() {
               <div className="flex items-center">
                 <Checkbox className="bg-gray-200" id="check" name="check" />
                 <label className="pl-1" htmlFor="check">
-                  Lembrar
+                  Lembrar-me
                 </label>
               </div>
 
