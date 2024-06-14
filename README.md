@@ -1,4 +1,5 @@
-![logo stone](./public/logo-stone.webp)
+<img src="./public/logo-stone.webp" alt="Image" height="200" style="display: block; margin: 40px auto;">
+
 
 # MEICash Front-end
 ## Sobre o projeto:
