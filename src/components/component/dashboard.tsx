@@ -54,6 +54,7 @@ import {
 } from "../ui/select";
 import userService from "@/service/UserService";
 import toast, { Toaster } from "react-hot-toast";
+import logoUrl from  "../../../public/logo-stone-tpt.webp";
 
 function Transactions() {
   const [title, setTitle] = useState("");
@@ -211,8 +212,12 @@ function Transactions() {
       {/* Sidebar */}
       <div className="md:min-h-screen min-h-64 md:w-1/5 flex flex-col bg-stone-800">
         <div className="text-center p-6 pb-1">
-          <a className="text-gray-200 text-3xl font-bold cursor-pointer">
-            Mei<span className="text-yellow-400">Cash</span>
+          <a className="text-gray-200 text-3xl font-bold cursor-pointer flex items-center justify-center">
+          <img
+            src={logoUrl}
+            alt="Logo"
+            className="mb-3 h-12"
+          />
           </a>
         </div>
         <div className="text-center p-7 pt-2">

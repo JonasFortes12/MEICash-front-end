@@ -16,7 +16,7 @@ import { useNavigate } from "react-router-dom";
 import authProvider from "@/service/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
 import { BsFillInfoSquareFill } from "react-icons/bs";
-import logoUrl from  "../../../public/logo-stone.webp";
+import logoUrl from  "../../../public/logo-stone-tpt.webp";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -79,7 +79,7 @@ function Login() {
           <img
             src={logoUrl}
             alt="Logo"
-            className="mb-3"
+            className="mb-10"
           />
             <CardTitle className="text-center font-bold text-2xl text-yellow-400" >
               Login
