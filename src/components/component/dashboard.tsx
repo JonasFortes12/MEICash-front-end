@@ -408,8 +408,8 @@ function Transactions() {
                       <SelectContent>
                         <SelectGroup>
                           <SelectLabel>Tipos de transações</SelectLabel>
-                          <SelectItem value="INCOME">INCOME</SelectItem>
-                          <SelectItem value="EXPENSE">EXPENSE</SelectItem>
+                          <SelectItem value="INCOME">RENDA</SelectItem>
+                          <SelectItem value="EXPENSE">DESPESA</SelectItem>
                         </SelectGroup>
                       </SelectContent>
                     </Select>
@@ -462,7 +462,7 @@ function Transactions() {
                     <div className="pt-3 text-start">
                       <p>
                         <span className="font-bold">Tipo de transação: </span>
-                        {data.type}
+                        {data.type == 'INCOME'? 'RENDA' : 'DESPESA'}
                       </p>
                     </div>
                   </CardHeader>
