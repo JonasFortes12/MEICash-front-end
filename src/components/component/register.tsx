@@ -27,6 +27,15 @@ function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [check, setCheck] = useState(false);
+  const [errors, setErrors] = useState({
+    companyName: "",
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    password: ""
+  });
+
   const handleCheck = () => setCheck(!check);
   const navigate = useNavigate();
 
@@ -39,8 +48,69 @@ function Register() {
     checkAuth();
   })
 
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(email);
+  };
+
+  const validatePassword = (password: string) => {
+    // Example: password must be at least 8 characters long
+    return password.length >= 8;
+  };
+
+  const validateFields = () => {
+    let valid = true;
+    let errors = {
+      companyName: "",
+      firstName: "",
+      lastName: "",
+      username: "",
+      email: "",
+      password: ""
+    };
+
+    if (!companyName) {
+      errors.companyName = "Nome da empresa é obrigatório";
+      valid = false;
+    }
+    if (!firstName) {
+      errors.firstName = "Primeiro nome é obrigatório";
+      valid = false;
+    }
+    if (!lastName) {
+      errors.lastName = "Último nome é obrigatório";
+      valid = false;
+    }
+    if (!username) {
+      errors.username = "Nome de usuário é obrigatório";
+      valid = false;
+    }
+    if (!email) {
+      errors.email = "Email é obrigatório";
+      valid = false;
+    } else if (!validateEmail(email)) {
+      errors.email = "Email inválido";
+      valid = false;
+    }
+    if (!password) {
+      errors.password = "Senha é obrigatória";
+      valid = false;
+    } else if (!validatePassword(password)) {
+      errors.password = "Senha deve ter pelo menos 8 caracteres";
+      valid = false;
+    }
+
+    setErrors(errors);
+    return valid;
+  };
+
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
+
+    if (!validateFields()) {
+      return;
+    }
 
     const user: User = {
       email,
@@ -55,9 +125,8 @@ function Register() {
       const resp = await userService.createUser(user);
       console.log(resp.status)
 
-      
-      if (resp.status == 200){
-        console.log('oi')
+      if (resp.status === 200){
+        console.log('Cadastro realizado com sucesso');
         return navigate('/')
       }
 
@@ -69,7 +138,7 @@ function Register() {
 
   return (
     <div className="h-fit w-full flex justify-center items-center bg-gray-200 p-4 sm:p-6 md:p-8">
-      <Card className="my-10 mx-auto w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl border-none bg-neutral-700 drop-shadow-2xl rounded-sm p-6 sm:p-8 md:p-10 lg:p-12 shadow-stone-400 shadow-[7px_7px_6px_0_rgba(0,0,0,0.1)]">
+      <Card className="h-fit my-10 mx-auto w-full max-w-md sm:max-w-lg md:max-w-xl lg:max-w-2xl border-none bg-neutral-700 drop-shadow-2xl rounded-sm p-6 sm:p-8 md:p-10 lg:p-12 shadow-stone-400 shadow-[7px_7px_6px_0_rgba(0,0,0,0.1)]">
         <div className="text-3xl w-fit">
           <a href="/login" className="cursor-pointer text-gray-200 hover:text-yellow-400">
             <BsFillArrowLeftCircleFill />
@@ -97,6 +166,7 @@ function Register() {
                   value={companyName}
                   onChange={(e) => setCompanyName(e.target.value)}
                 />
+                {errors.companyName && <p className="text-red-500 text-sm">{errors.companyName}</p>}
               </div>
               <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="firstName">Primeiro nome</Label>
@@ -109,6 +179,7 @@ function Register() {
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
                 />
+                {errors.firstName && <p className="text-red-500 text-sm">{errors.firstName}</p>}
               </div>
               <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="lastName">Último nome</Label>
@@ -121,6 +192,7 @@ function Register() {
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
                 />
+                {errors.lastName && <p className="text-red-500 text-sm">{errors.lastName}</p>}
               </div>
               <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="username">Nome de usuário</Label>
@@ -133,6 +205,7 @@ function Register() {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                 />
+                {errors.username && <p className="text-red-500 text-sm">{errors.username}</p>}
               </div>
               <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="email">Email</Label>
@@ -145,6 +218,7 @@ function Register() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
+                {errors.email && <p className="text-red-500 text-sm">{errors.email}</p>}
               </div>
               <div className="flex flex-col space-y-1.5 text-gray-200">
                 <Label htmlFor="password">Senha</Label>
@@ -157,6 +231,7 @@ function Register() {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                 />
+                {errors.password && <p className="text-red-500 text-sm">{errors.password}</p>}
               </div>
             </div>
             <div className="w-full flex flex-row justify-between text-gray-200 pt-2">
