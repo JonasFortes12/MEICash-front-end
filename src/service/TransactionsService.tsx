@@ -1,3 +1,4 @@
+import Transaction from "@/interfaces/Transaction";
 import apiClient from "./ApiClient";
 
 const BASE_URL = 'http://20.163.168.29:8080'
@@ -23,6 +24,10 @@ const transactionsService = {
         const res = apiClient.delete(`${BASE_URL}/profile/transactions/${id}`, token);
 
         return res
+    },
+
+    searchTransaction: (search: string, data: Transaction[]) => {
+        return data.filter(objeto => objeto.title.includes(search));
     }
 }
 

@@ -11,7 +11,6 @@ const apiClient = {
                     'Authorization': 'Bearer ' + token,
                 },
             })
-
             return resp.json()
         }
 
@@ -22,7 +21,6 @@ const apiClient = {
                 'Content-Type': 'application/json',
             },
         })
-
         return resp
     },
 
@@ -37,7 +35,6 @@ const apiClient = {
                 },
                 body: JSON.stringify(data)
             })
-
             return resp
         }
 
@@ -67,17 +64,6 @@ const apiClient = {
 
         return resp
     }
-}
-
-const handleResponse = (resp: Response) => { 
-    if (resp.status === 0) {
-        const error = resp.statusText
-        console.log(error)
-        throw new Error(error)
-    }
-
-    console.log(resp.json())
-    return resp.json()
 }
 
 export default apiClient

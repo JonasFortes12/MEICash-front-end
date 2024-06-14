@@ -53,7 +53,6 @@ import {
   SelectValue,
 } from "../ui/select";
 import userService from "@/service/UserService";
-import User from "@/interfaces/User";
 
 function Transactions() {
   const [title, setTitle] = useState("");
@@ -62,10 +61,12 @@ function Transactions() {
   const [categoryName, setCategoryName] = useState("");
   const [color, setColor] = useState("");
   const [trans, setTrans] = useState<Transaction[]>([]);
+  const [auxTrans, setAuxTrans] = useState<Transaction[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [user, setUser] = useState({ companyName: "", username: "" });
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedType, setSelectedType] = useState("");
+  const [search, setSearch] = useState("");
   const [selectedTrans, setSelectedTrans] = useState("");
   const navigate = useNavigate();
 
@@ -87,6 +88,7 @@ function Transactions() {
       try {
         const resp = await transactionsService.getAll();
         setTrans(resp);
+        setAuxTrans(resp);
       } catch (error) {
         console.log(error);
       }
@@ -155,6 +157,22 @@ function Transactions() {
     }
   }
 
+  function handleSubmitSearch(e: FormEvent) {
+    e.preventDefault();
+
+    if (!search) {
+      return setTrans(auxTrans)
+    }
+
+    const data = transactionsService.searchTransaction(search, auxTrans);
+
+    if (data) {
+      return setTrans(data);
+    }
+
+    return setTrans(auxTrans);
+  }
+
   async function handleSubmitDelete(e: FormEvent) {
     e.preventDefault();
 
@@ -163,12 +181,12 @@ function Transactions() {
     try {
       const resp = await transactionsService.deleteTransaction(id);
 
-      if (resp.ok){
+      if (resp.ok) {
         const data = await transactionsService.getAll();
         setTrans(data);
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
@@ -233,11 +251,16 @@ function Transactions() {
         </h1>
 
         <div className="flex items-center justify-between">
-          <form className="flex items-center gap-2 w-1/2">
+          <form
+            className="flex items-center gap-2 w-1/2"
+            onSubmit={handleSubmitSearch}
+          >
             <Input
               name="id"
               placeholder="Título da transação"
               className="w-full"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
             />
             <Button type="submit" variant={"secondary"}>
               <Search className="w-4 h-4 mr-2" />
@@ -272,7 +295,7 @@ function Transactions() {
                       required
                     />
                     <p className="flex">
-                      Escolha a cor desejada
+                      Escolha a cor desejada:
                       <input
                         type="color"
                         value={color}
@@ -405,50 +428,56 @@ function Transactions() {
         </div>
 
         <div className="grid grid-cols-2 gap-4 border rounded-lg p-3">
-          {trans.map((data, index) => (
-            <Card key={index} className="justify-items-start">
-              <CardContent>
-                <CardHeader className="grid justify-items-start">
-                  <CardTitle className="w-full font-bold text-2xl text-stone-700 flex justify-between">
-                    <div>{data.title}</div>
-                    <form
-                      onClick={() => setSelectedTrans(data.id)}
-                      onSubmit={handleSubmitDelete}
-                      className="pt-2 text-lg"
-                    >
-                      <button type="submit">
-                        <BsXSquareFill className="cursor-pointer" />
-                      </button>
-                    </form>
-                  </CardTitle>
-                  <CardDescription>
-                    Valor da transação: R${data.value}
-                  </CardDescription>
+          {trans.length == 0 ? (
+            <div className="text-start">
+              <p>Sem transações cadastradas!</p>
+            </div>
+          ) : (
+            trans.map((data, index) => (
+              <Card key={index} className="justify-items-start">
+                <CardContent>
+                  <CardHeader className="grid justify-items-start">
+                    <CardTitle className="w-full font-bold text-2xl text-stone-700 flex justify-between">
+                      <div>{data.title}</div>
+                      <form
+                        onClick={() => setSelectedTrans(data.id)}
+                        onSubmit={handleSubmitDelete}
+                        className="pt-2 text-lg"
+                      >
+                        <button type="submit">
+                          <BsXSquareFill className="cursor-pointer" />
+                        </button>
+                      </form>
+                    </CardTitle>
+                    <CardDescription>
+                      Valor da transação: R${data.value}
+                    </CardDescription>
 
-                  <div className="pt-3 text-start">
-                    <p>
-                      <span className="font-bold">Descrição:</span>{" "}
-                      {data.description}
-                    </p>
+                    <div className="pt-3 text-start">
+                      <p>
+                        <span className="font-bold">Descrição:</span>{" "}
+                        {data.description}
+                      </p>
+                    </div>
+                    <div className="pt-3 text-start">
+                      <p>
+                        <span className="font-bold">Tipo de transação: </span>
+                        {data.type}
+                      </p>
+                    </div>
+                  </CardHeader>
+                </CardContent>
+                <CardFooter className="h-max space-x-1 justify-end font-bold pl-10">
+                  <div
+                    className="w-1/3 border rounded-lg p-1 text-white border-none cursor-pointer"
+                    style={{ backgroundColor: data.categoryColor }}
+                  >
+                    {data.categoryName}
                   </div>
-                  <div className="pt-3 text-start">
-                    <p>
-                      <span className="font-bold">Tipo de transação: </span>
-                      {data.type}
-                    </p>
-                  </div>
-                </CardHeader>
-              </CardContent>
-              <CardFooter className="h-max space-x-1 justify-end font-bold pl-10">
-                <div
-                  className="w-1/3 border rounded-lg p-1 text-white border-none cursor-pointer"
-                  style={{ backgroundColor: data.categoryColor }}
-                >
-                  {data.categoryName}
-                </div>
-              </CardFooter>
-            </Card>
-          ))}
+                </CardFooter>
+              </Card>
+            ))
+          )}
         </div>
       </div>
     </div>
