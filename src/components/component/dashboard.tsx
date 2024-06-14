@@ -34,7 +34,7 @@ import { FaUser } from "react-icons/fa6";
 import { FaBell } from "react-icons/fa6";
 import { FaCirclePlus } from "react-icons/fa6";
 import { IoLogOutOutline } from "react-icons/io5";
-import { BsXSquareFill } from "react-icons/bs";
+import { BsFillInfoSquareFill, BsXSquareFill } from "react-icons/bs";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -53,6 +53,7 @@ import {
   SelectValue,
 } from "../ui/select";
 import userService from "@/service/UserService";
+import toast, { Toaster } from "react-hot-toast";
 
 function Transactions() {
   const [title, setTitle] = useState("");
@@ -111,6 +112,14 @@ function Transactions() {
   function logout() {
     authProvider.logout();
 
+    toast("Logout realizado com sucesso!", {
+      icon: <BsFillInfoSquareFill className="text-green-400" />,
+      style: {
+        background: "#292524",
+        color: "#e5e7eb",
+      },
+    });
+
     return navigate("/login");
   }
 
@@ -132,6 +141,13 @@ function Transactions() {
 
       if (resp.ok) {
         window.location.reload();
+        toast("Transação cadastrada com sucesso!", {
+          icon: <BsFillInfoSquareFill className="text-green-400" />,
+          style: {
+            background: "#292524",
+            color: "#e5e7eb",
+          },
+        });
       }
     } catch (error) {
       console.log(error);
@@ -192,6 +208,7 @@ function Transactions() {
 
   return (
     <div className="w-full min-h-screen flex overflow-x-auto">
+      <Toaster/>
       <div className="min-h-screen w-1/5 flex flex-col bg-stone-800">
         <div className="text-center p-6 pb-1">
           <a className="text-gray-200 text-3xl font-bold cursor-pointer">
@@ -435,7 +452,7 @@ function Transactions() {
           ) : (
             trans.map((data, index) => (
               <Card key={index} className="justify-items-start">
-                <CardContent>
+                <CardContent className="h-5/6">
                   <CardHeader className="grid justify-items-start">
                     <CardTitle className="w-full font-bold text-2xl text-stone-700 flex justify-between">
                       <div>{data.title}</div>
@@ -445,7 +462,7 @@ function Transactions() {
                         className="pt-2 text-lg"
                       >
                         <button type="submit">
-                          <BsXSquareFill className="cursor-pointer" />
+                          <BsXSquareFill className="cursor-pointer hover:text-yellow-400 duration-500" />
                         </button>
                       </form>
                     </CardTitle>
@@ -467,7 +484,7 @@ function Transactions() {
                     </div>
                   </CardHeader>
                 </CardContent>
-                <CardFooter className="h-max space-x-1 justify-end font-bold pl-10">
+                <CardFooter className="w-[96%] space-x-1  justify-end font-bold ">
                   <div
                     className="w-1/3 border rounded-lg p-1 text-white border-none cursor-pointer"
                     style={{ backgroundColor: data.categoryColor }}
