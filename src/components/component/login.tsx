@@ -14,6 +14,8 @@ import { FormEvent, useEffect, useState } from "react";
 import userService from "@/service/UserService";
 import { useNavigate } from "react-router-dom";
 import authProvider from "@/service/AuthProvider";
+import toast, { Toaster } from "react-hot-toast";
+import { BsFillInfoSquareFill } from "react-icons/bs";
 import logoUrl from  "../../../public/logo-stone.webp";
 
 function Login() {
@@ -23,12 +25,12 @@ function Login() {
 
   useEffect(() => {
     function checkAuth() {
-      if (authProvider.checkAuth()){
-        return navigate('/')
+      if (authProvider.checkAuth()) {
+        return navigate("/");
       }
     }
     checkAuth();
-  })
+  });
 
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
@@ -42,13 +44,29 @@ function Login() {
       const resp = await userService.login(user);
 
       if (resp) {
-        authProvider.login(resp.token)
+        authProvider.login(resp.token);
 
-        return navigate('/');
+        toast("Login realizado com sucesso!", {
+          icon: <BsFillInfoSquareFill className="text-green-400" />,
+          style: {
+            background: "#292524",
+            color: "#e5e7eb",
+          },
+        });
+        return navigate("/");
       }
 
-      navigate('/')
-    } catch (error) {}
+      return
+    } catch (error) {
+      toast("Usuário ou senha incorretos!", {
+        icon: <BsFillInfoSquareFill className="text-red-400" />,
+        style: {
+          background: "#292524",
+          color: "#e5e7eb",
+        },
+      });
+      console.log(error);
+    }
   }
 
   return (
@@ -106,20 +124,33 @@ function Login() {
 
               <div className="flex pl-1">
                 <a href="/">
-                  <span className="text-sm font-bold cursor-pointer hover:text-yellow-400 duration-500 underline hover:decoration-yellow-400"> Esqueci minha senha</span>
+                  <span className="text-sm font-bold cursor-pointer hover:text-yellow-400 duration-500 underline hover:decoration-yellow-400">
+                    {" "}
+                    Esqueci minha senha
+                  </span>
                 </a>
               </div>
             </div>
           </CardContent>
           <CardFooter className="flex flex-col mb-4">
-
             <div className="mt-2 mb-2 w-full ">
-              <Button type="submit" className="w-full font-bold text-base bg-stone-800 text-yellow-400 hover:bg-stone-700">
+              <Button
+                type="submit"
+                className="w-full font-bold text-base bg-stone-800 text-yellow-400 hover:bg-stone-700"
+              >
                 Entrar{" "}
-              </Button> 
+              </Button>
             </div>
             <div className="w-full">
-              <a href="/register" className="text-sm font-bold underline decoration-solid justify-start text-gray-200 ">Ainda não possui uma conta? <span className="cursor-pointer hover:text-yellow-400 duration-500 underline hover:decoration-yellow-400">Cadastre-se aqui</span></a>
+              <a
+                href="/register"
+                className="text-sm font-bold underline decoration-solid justify-start text-gray-200 "
+              >
+                Ainda não possui uma conta?{" "}
+                <span className="cursor-pointer hover:text-yellow-400 duration-500 underline hover:decoration-yellow-400">
+                  Cadastre-se aqui
+                </span>
+              </a>
             </div>
           </CardFooter>
         </form>
