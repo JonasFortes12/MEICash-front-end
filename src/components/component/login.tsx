@@ -35,6 +35,17 @@ function Login() {
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
 
+    if (!username || !password) {
+      toast("Nome de usuário e senha são obrigatórios.", {
+        icon: <BsFillInfoSquareFill className="text-red-400" />,
+        style: {
+          background: "#292524",
+          color: "#e5e7eb",
+        },
+      });
+      return;
+    }
+
     const user = {
       username,
       password,
@@ -155,6 +166,7 @@ function Login() {
           </CardFooter>
         </form>
       </Card>
+      <Toaster />
     </div>
   );
 }
