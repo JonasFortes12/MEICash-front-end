@@ -1,4 +1,4 @@
-<img src="./public/logo-stone.webp" alt="Image" height="200" style="display: block; margin: 40px auto;">
+<img src="./public/logo-stone.webp" alt="Image" height="150" style="display: block; margin: 40px auto;">
 
 
 # MEICash Front-end
