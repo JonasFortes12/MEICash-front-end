@@ -16,6 +16,7 @@ import { useNavigate } from "react-router-dom";
 import authProvider from "@/service/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
 import { BsFillInfoSquareFill } from "react-icons/bs";
+import logoUrl from  "../../../public/logo-stone-tpt.webp";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -74,7 +75,13 @@ function Login() {
       <Card className="border-none w-full max-w-md bg-neutral-700 drop-shadow-2xl rounded-sm p-6 sm:p-8 md:p-12 shadow-stone-400 shadow-[7px_7px_6px_0_rgba(0,0,0,0.1)]">
         <form onSubmit={handleSubmit}>
           <CardHeader>
-            <CardTitle className="text-center font-bold text-2xl text-yellow-400">
+            {/* Logo */}
+          <img
+            src={logoUrl}
+            alt="Logo"
+            className="mb-10"
+          />
+            <CardTitle className="text-center font-bold text-2xl text-yellow-400" >
               Login
             </CardTitle>
             <CardDescription className="text-gray-200 text-center">
