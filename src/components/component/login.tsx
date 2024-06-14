@@ -14,6 +14,7 @@ import { FormEvent, useEffect, useState } from "react";
 import userService from "@/service/UserService";
 import { useNavigate } from "react-router-dom";
 import authProvider from "@/service/AuthProvider";
+import logoUrl from  "../../../public/logo-stone.webp";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -56,6 +57,12 @@ function Login() {
       <Card className="border-none w-full max-w-md bg-neutral-700 drop-shadow-2xl rounded-sm p-6 sm:p-8 md:p-12 shadow-stone-400 shadow-[7px_7px_6px_0_rgba(0,0,0,0.1)]">
         <form onSubmit={handleSubmit}>
           <CardHeader>
+            {/* Logo */}
+          <img
+            src={logoUrl}
+            alt="Logo"
+            className="mb-3"
+          />
             <CardTitle className="text-center font-bold text-2xl text-yellow-400" >
               Login
             </CardTitle>

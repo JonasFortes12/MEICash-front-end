@@ -1,3 +1,5 @@
+![logo stone](./public/logo-stone.webp)
+
 # MEICash Front-end
 ## Sobre o projeto:
 O MEICash é um sistema de apoio à organização financeira de Micro Empreendedores Individuais (MEIs).
